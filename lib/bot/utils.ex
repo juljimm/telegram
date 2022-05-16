@@ -49,6 +49,9 @@ defmodule Telegram.Bot.Utils do
   @spec get_chat(Types.update()) :: {:ok, map()} | nil
   def get_chat(update) do
     Enum.find_value(update, fn
+      {_update_type, %{"from" => %{"id" => id}} = _chat} ->
+        {:ok, %{"id" => id}}
+
       {_update_type, %{"chat" => %{"id" => _} = chat}} ->
         {:ok, chat}
 
